@@ -1,0 +1,14 @@
+{
+    "tests": [
+      {
+        "name": "Text & Button test",
+        "setup": "",
+        "run": "cd test && ./run.sh",
+        "input": "",
+        "output": "",
+        "comparison": "included",
+        "timeout": 10,
+        "points": 3
+      }
+    ]
+  }

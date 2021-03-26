@@ -1,0 +1,19 @@
+name: GitHub Classroom Workflow
+
+on: [push]
+
+jobs:
+  build:
+    runs-on: macos-latest
+    env:
+      ANDROID_HOME: /users/runner/Library/Android/sdk
+      JAVA_HOME: /Library/Java/JavaVirtualMachines/adoptopenjdk-8.jdk/Contents/Home
+    steps:
+      - uses: actions/checkout@v2
+      - run: chmod u+x ./.github/classroom_setup.sh
+      - run: ./.github/classroom_setup.sh
+      - run: ./gradlew assembleDebug
+      - run: mv app/build/outputs/apk/debug/*.apk test/application.apk
+      - run: $ANDROID_HOME/emulator/emulator -avd test -no-window -gpu swiftshader_indirect -no-snapshot -noaudio -no-boot-anim &
+      - uses: education/autograding@v1
+      - run: $ANDROID_HOME/platform-tools/adb -s emulator-5554 emu kill
